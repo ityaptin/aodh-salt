@@ -1,0 +1,39 @@
+applications:
+- aodh
+classes:
+- service.aodh.support
+parameters:
+  aodh:
+    server:
+      enabled: true
+      version: ${_param:aodh_version}
+      cluster: true
+      ttl: 86400
+      publisher:
+        default:
+      database:
+        engine: mysql
+        host: ${_param:cluster_vip_address}
+        port: 3306
+        name: aodh
+        user: aodh
+        password: ${_param:mysql_nova_password}
+      bind:
+        host: ${_param:cluster_local_address}
+        port: 8042
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        port: 35357
+        tenant: service
+        user: ceilometer
+        password: ${_param:keystone_ceilometer_password}
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+        # Workaround for https://bugs.launchpad.net/ceilometer/+bug/1337715
+        rpc_thread_pool_size: 5
