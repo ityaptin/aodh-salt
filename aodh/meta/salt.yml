@@ -1,0 +1,6 @@
+orchestrate:
+  server:
+    priority: 690
+    batch: 1
+    require:
+    - salt: keystone.server
